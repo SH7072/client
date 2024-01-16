@@ -1,7 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { connect, StringCodec } from "../node_modules/nats.ws/lib/src/mod";
+
 
 function App() {
+  const publisher = async () => {
+    const nc = await connect({ servers: "nats://localhost:4222" });
+    console.log("connected as Publisher");
+    //   const sc = StringCodec();
+    nc.publish("test", "hello world");
+    //   const sub = nc.subscribe("test");
+    //   for await (const m of sub) {
+    //     console.log(`[${sub.getProcessed()}]: ${m.data}`);
+    //   }
+  }
+  publisher();
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +32,7 @@ function App() {
           Learn React
         </a>
       </header>
+      
     </div>
   );
 }
