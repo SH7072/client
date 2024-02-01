@@ -1,18 +1,25 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { connect, StringCodec } from "../node_modules/nats.ws/lib/src/mod";
+import { connect, StringCodec } from "nats.ws/";
 
 
 function App() {
   const publisher = async () => {
-    const nc = await connect({ servers: "nats://localhost:4222" });
-    console.log("connected as Publisher");
-    //   const sc = StringCodec();
-    nc.publish("test", "hello world");
-    //   const sub = nc.subscribe("test");
-    //   for await (const m of sub) {
-    //     console.log(`[${sub.getProcessed()}]: ${m.data}`);
-    //   }
+    let nc;
+    try{
+
+      nc = await connect({ servers: "nats://localhost:4222" });
+      console.log("connected as Publisher");
+      //   const sc = StringCodec();
+      nc.publish("test", "hello world");
+      //   const sub = nc.subscribe("test");
+      //   for await (const m of sub) {
+        //     console.log(`[${sub.getProcessed()}]: ${m.data}`);
+        //   }
+      }
+      catch(error){
+        console.log(error);
+      }
   }
   publisher();
 
